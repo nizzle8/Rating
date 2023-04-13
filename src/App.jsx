@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import Star from './Star'
+import { FaStar } from 'react-icons/fa'
 import Kaiju from './assets/Kaiju.png'
+import { initialReviews } from './reviews'
 
-const initialReviews = [{
-   review: "He built me a calculator that I can use in my web browser! Now I can throw away my iPhone",
-   date: "10/04/2023, 15:03:54"
-}]
+
 
 const App = () => {
    const [hoveredStar, setHoveredStar] = useState(-1)
@@ -23,7 +22,8 @@ const App = () => {
       event.preventDefault()
       const newReviewObject = {
          review: newReview,
-         date: new Date().toLocaleString()
+         date: new Date().toLocaleString(),
+         stars: rating
       }
 
       setReviews([newReviewObject, ...reviews])
@@ -50,14 +50,14 @@ const App = () => {
    return (
       <div>
          <div className='mb-2'>
-            <h2 className='font-bold text-lg mb-2'>Nizzle</h2>
+            <h2 className='font-bold text-2xl mb-2 text-center max-w-[250px]'>Nizzle</h2>
             <img src={Kaiju} alt="pfp" className='max-w-[250px] mb-2 rounded-full' />
 
             <div className='flex max-w-[250px] justify-center mb-2'>
                {starList}
             </div>
 
-            <p className='max-w-[250px]'>I'm still learning but I'm motivated. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium fuga beatae sequi accusamus suscipit omnis.</p>
+            <p className='max-w-[250px] tracking-wide'>I'm still learning but I'm motivated. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium fuga beatae sequi accusamus suscipit omnis.</p>
          </div>
 
          {showReviewBox && (
@@ -71,7 +71,7 @@ const App = () => {
                   />
                </div>
                <div>
-                  <button className='border rounded p-2 mb-2'>Submit</button>
+                  <button className='border rounded px-2 py-1 mb-2'>Submit</button>
                </div>
             </form>
          )}
@@ -81,7 +81,13 @@ const App = () => {
             {reviews.map((review, i) => (
                <div key={i} className='review'>
                   <p className='mb-2'>{review.review}</p>
-                  <p className='text-xs'>{review.date}</p>
+                  <p className='text-xs text-end'>{review.date}</p>
+                  <div className='flex text-xs text-[goldenrod] justify-end'>
+                     {[...Array(review.stars)].map((_, i) => (
+                     <p>
+                        <FaStar key={i}/>
+                     </p>))}
+                  </div>
                </div>
             ))}
          </div>
